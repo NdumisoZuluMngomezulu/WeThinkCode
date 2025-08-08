@@ -1,48 +1,67 @@
 import random
 
+def get_level():
+    n = int(input("Please enter the level between 1 and 3. \n"))
+    if ((n < 1) or (n > 3)):
+        n = int(input("Please re-enter the level between 1 and 3. \n"))
+    elif (n = ""):
+        n = int(input("Please re-enter the level between 1 and 3. \n"))
+    
+    exit()
 
 def professor():
-    level = get_level()
     count = 0
-    for _ in range(10):
-        x = generate_integer(level)
-        y = generate_integer(level)
-        score = score + problem (x,y)
-    print("Score:", count)
+    guess = 0
+    n = get_level()
 
-def get_level():
-    while True:
-        try:
-            level = int(input("Level:"))
-            if 1<= level <=3:
-                return level
-        except:
-            continue
+    if (n == 1):
+        for i in range(1, 11):
+            x = random.randint(1,9)
+            y = random.randint(1,9)
+            ans = x + y
+            guess = int(input(f"What is {x} + {y}: "))
 
-
-def generate_integer(level):
-    if level == 1:
-        return random.randint(0,9)
-    if level == 2:
-        return random.randint(10,99)
-    if level == 3:
-        return random.randint(100,999)
-
-
-def problem(x,y):
-    answer = x+y
-    try:
-        for _ in range(3):
-            ans = int(input(f"{x} + {y} = "))
-            if ans == answer:
-                return 1
-            else:
+            if (guess != ans):
                 print("EEE")
-                continue
-        print(str(x),"+",str(y),"=",answer)
-        return 0
-    except:
-        return 0
+                for i in range(1,4):
+                    print(f"What is {x} + {y}: ")
+            else:
+                count += 1
+                print("Big dawg!")
 
-if __name__ == "__main__":
-    professor()
+    elif (n == 2):
+        for i in range(1, 11):
+            x = random.randint(10,99)
+            y = random.randint(10,99)
+            ans = x + y
+            guess = int(input(f"What is {x} + {y}: "))
+
+            if (guess != ans):
+                print("EEE")
+                for i in range(1,4):
+                    print(f"What is {x} + {y}: ")
+            else:
+                count += 1
+                print("Big dawg!")
+            
+    else:
+        for i in range(1, 11):
+            x = random.randint(100,999)
+            y = random.randint(100,999)
+            ans = x + y
+            guess = int(input(f"What is {x} + {y}: "))
+
+            if (guess != ans):
+                print("EEE")
+                for i in range(1,4):
+                    print(f"What is {x} + {y}: ")
+            else:
+                count += 1
+                print("Big dawg!")
+    print(f"You scored {count} out of 10.")
+    exit()
+
+professor()
+
+            
+    
