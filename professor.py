@@ -4,10 +4,10 @@ def get_level():
     n = int(input("Please enter the level between 1 and 3. \n"))
     if ((n < 1) or (n > 3)):
         n = int(input("Please re-enter the level between 1 and 3. \n"))
-    elif (n = ""):
+    elif (n == ""):
         n = int(input("Please re-enter the level between 1 and 3. \n"))
-    
-    exit()
+
+    return n
 
 def professor():
     count = 0
