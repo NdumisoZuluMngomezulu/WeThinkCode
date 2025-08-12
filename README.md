@@ -1,2 +1,2 @@
 # WeThinkCode
-Python CS50 Problem Set Solution for WeThinkCode Pre Academic Learning
+Python CS50 Problem Set Solutions for WeThinkCode Pre Academic Learning
