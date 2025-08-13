@@ -6,9 +6,9 @@ def lines_of_code():
     elif (len(sys.argv[1]) < 2):
         sys.exit("Too few arguments")
     else:
-        fileName = sys.argv[1]
-        if (fileName.endswith(".py")):
-            with open(fileName, "r") as file:
+        sys.argv[1]
+        if (sys.argv[1].endswith(".py")):
+            with open(sys.argv[1], "r") as file:
                 count = 0
                 for line in file:
                     if not (line.lstrip().startswith("#") or line.strip() == ""):
@@ -19,4 +19,3 @@ def lines_of_code():
     return count
 
 
-        
