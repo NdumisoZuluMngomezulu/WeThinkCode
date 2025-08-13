@@ -1,9 +1,9 @@
 import sys
 
 def lines_of_code():
-    if (len(sys.argv[1]) > 2):
+    if (len(sys.argv) > 3):
         sys.exit("Too many arguments.")
-    elif (len(sys.argv[1]) < 2):
+    elif (len(sys.argv) < 2):
         sys.exit("Too few arguments")
     else:
         sys.argv[1]
@@ -16,6 +16,9 @@ def lines_of_code():
         else:
             sys.exit("Not a python file")
     
-    return count
+    print(count)
+
+lines_of_code()
+
 
 
