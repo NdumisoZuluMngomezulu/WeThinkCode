@@ -1,27 +1,23 @@
-#grocery.py
-def checkOUT():
-    checkoutLIST = []
-    count = 0;
-    dictionary = {}
+def main():
+    print(grocery())
 
-    try:
-        while True:
-            item = input("Enter item: \n")
-            ITEM = item.upper()
-            checkoutLIST.append(item)
-    except ValueError:
-        print("Error: Please enter the string.")
-    except EOFError:
-        pass
+def grocery():
+    grocery_list = {}
+    while True:
+        try:
+            item = input("Item: ").upper()
+            grocery_list[item] = grocery_list.get(item, 0) + 1
+        except ValueError:
+            print("Please use a string")
+        except EOFError:
+            break
+
+    sorted_list = sorted(grocery_list.keys())
+
+    for item in sorted_list:
+        print(f"{grocery_list[item]} {item}")
     
-    uniqueList = list(set(checkoutLIST))
+    
+if __name__ == "__main__":
+    main()
 
-    for i in range(len(uniqueList)):
-        count = checkoutLIST.count(uniqueList[i])
-        dictionary.update({uniqueList[i]:count})
-        print(dictionary)
-        dictionary.clear()
-
-    return '0'
-
-print(checkOUT())
