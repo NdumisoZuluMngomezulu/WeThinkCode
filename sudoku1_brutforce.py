@@ -24,59 +24,6 @@ def board_printer(board):
         print(i, row, end=" ")
         print()
 
-def check_play(board, row, column, choice):
-    if 0 <= row < 9 and 0 <= column < 9 and choice not in board[row] and choice not in [rows[column] for rows in board]:
-        first_grid = [rows[0:3] for rows in board[0:3]]
-        second_grid = [rows[3:6] for rows in board[0:3]]
-        third_grid = [rows[6:9] for rows in board[0:3]]
-        fourth_grid = [rows[0:3] for rows in board[3:6]]
-        fifth_grid = [rows[3:6] for rows in board[3:6]]
-        sixth_grid = [rows[6:9] for rows in board[3:6]]
-        seventh_grid = [rows[0:3] for rows in board[6:8]]
-        eight_grid = [rows[3:6] for rows in board[6:8]]
-        nineth_grid = [rows[6:9] for rows in board[6:8]]
-
-        #x = random.randint(0,9), y = random.randint(0, 9)
-        x = row
-        y = column
-        #x is the row, y is the column
-        if x in range(0, 3) and y in range(0, 3):
-            if choice not in first_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(0, 3) and y in range(3, 6):
-            if choice not in second_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(0, 3) and y in range(6, 9):
-            if choice not in third_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(3, 6) and y in range(3, 6):
-            if choice not in fourth_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(3, 6) and y in range(0, 3):
-            if choice not in fifth_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(3, 6) and y in range(3, 6):
-            if choice not in sixth_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(6, 8) and y in range(0, 3):
-            if choice not in seventh_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(6, 8) and y in range(3, 6):
-            if choice not in eight_grid:
-                board[x][y] = choice 
-                return board
-        if x in range(6, 8) and y in range(6, 9):
-            if choice not in nineth_grid:
-                board[x][y] = choice 
-                return board
-    return None
 
 def valid_play(board, row, column, choice):
     if 0 <= row < 9 and 0 <= column < 9 and choice not in board[row] and choice not in [rows[column] for rows in board]:
