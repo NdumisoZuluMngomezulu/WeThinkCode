@@ -58,21 +58,35 @@ def possible_candidates(board, row, col):
 # board = sudoku_board("sudoku1.txt")
 # print_grid(board)
 
-def solve_iteration(textfile):
-    board = sudoku_board(textfile)
-    print_grid(board)
+def solve_iteration(board):
+    dictionary = {}
     for i in range(9):
         for j in range(9):
             if board[i][j] == 0:
-                set_values = possible_candidates(board, i, j)
-                print(f"This zero {i, j}: {set_values}")
-                if len(set_values) > 0:
-                    board[i][j] = set_values[0]
+                dictionary[(i, j)] = possible_candidates(board, i, j)
+                
+        
+    # dictionary = sorted(dictionary.items(), key=lambda x: len(x[1]))
+    # first_entry = next(iter(dictionary))
+    # board[first_entry[0]][first_entry[1]] = dictionary[first_entry]
+    # dictionary = list(dictionary.items())
+    # del dictionary[0]
+    # dictionary = dict(dictionary)
 
-    return board
+    #return print_grid(board)
+board = sudoku_board("sudoku.txt")
+# print_grid(board)
 
-board = solve_iteration("sudoku.txt")
-print_grid(board)
-print("+++++++++")
-board = solve_iteration("sudoku.txt")
-print_grid(board)
+# print(solve_iteration(board))
+dictionary = {(0, 3): [3, 4], (0, 7): [1, 4, 9], (1, 2): [2,5,8,9]}
+dictionary = sorted(dictionary.items(), key=lambda x: len(x[1]))
+first_entry = next(iter(dictionary))[0]
+print(first_entry)
+print(dictionary[(0, 3)])
+#board[first_entry[0]][first_entry[1]] = dictionary[first_entry]
+# dictionary = list(dictionary.items())
+# del dictionary[0]
+# dictionary = dict(dictionary)
+
+
+
