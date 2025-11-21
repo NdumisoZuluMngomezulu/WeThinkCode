@@ -44,7 +44,7 @@ def insert_sorted(zone, zones):
                 break
             else:
                 continue
-        if not inserted:
+        if not insert:
             zones.append(zone)
 
 def generate_square_coords():
@@ -56,9 +56,9 @@ def generate_square_coords():
 
     while len(square_coordinates) < 9:
         square_coordinates.append(
-            {"row-begin" : row_begin,
+            {"row_begin" : row_begin,
             "row_end" : row_end,
-            "col-begin" : col_begin,
+            "col_begin" : col_begin,
             "col_end" : col_end}
         )
         if col_begin < 6 and col_end < 8:
@@ -100,15 +100,28 @@ def extract_zones(board):
                 if board[row][col] != 0:
                     nonzero_elements += 1
         zone = {}
-        zone["type"] = "suqare"
+        zone["type"] = "square"
         zone["len"] = nonzero_elements
         zone["coord"] = tuple(square.values())
         insert_sorted(zone, zones)
     
     return zones
 
-def get_zone_elements():
-    pass
+def get_zone_elements(key, row, col, puzzle):
+    elements = []
+    if key == "row":
+        elements = puzzle[row]
+    elif key == "col":
+        for i in range(9):
+            elements.append(puzzle[i][col])
+    else:
+        row_start = (row//3)*3
+        col_start = (col//3)*3
+        for i in range(row_start, row_start + 3):
+            for j in range(col_start, col_start + 3):
+                elements.append(puzzle[i][j])
+    return elements
+    
 
 def insert_possibilities(puzzle, row, col):
     if puzzle[row][col] == 0:
@@ -146,4 +159,4 @@ if __name__ == "__main__":
                         insert_possibilities(puzzle, row, col)
     
     print("-"*50)
-    print_board(puzzle)
+    board_printer(puzzle)
