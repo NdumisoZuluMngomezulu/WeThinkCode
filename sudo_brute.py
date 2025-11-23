@@ -1,92 +1,57 @@
-def sudoku_board(textfile):
-    lines = []
-    with open(textfile, "r") as file:
-        for line in file:
-            line = line.replace("\n", " ")
-            if line.strip():
-                lines.append(line)
-    board = []
-    for i, element in enumerate(lines):
-        line = [int(char) for char in element if char != " "]
-        #line = [char for char in line if char != 0 else char = " "]
-        board.append(line)
-    
-    return board
-
-def print_grid(arr):
-    for i in range(9):
-        for j in range(9):
-            print(arr[i][j], end=" "),
-        print()
-
-def locate_zeroes(board):
-    for i in range(9):
-        for j in range(9):
-            if board[i][j] == 0:
-                return True
-    return False
-
-def possible_candidates(board, row, col):
-
-    if board[row][col] != 0:
-        return []
-    
-    possible_values = set([x for x in range(1,10)])
-    #row
-    for num in range(1, 9):
-        if num in board[row]:
-            if len(possible_values) > 0:
-                possible_values.remove(num)
-    #column
-    for i in range(1, 9):
-        num = board[i][col]
-        if num in possible_values:
-            if len(possible_values) > 0:
-                possible_values.remove(num)
-    #sub grid
-    start_row = (row//3)*3
-    start_col = (col//3)*3
-    for r in range(start_row, start_row + 3):
-        for c in range(start_col, start_col + 3):
-            num = board[r][c]
-            if num in possible_values:
-                if len(possible_values) > 0:
-                    possible_values.remove(num)
-
-    return sorted(list(possible_values))
-        
-# board = sudoku_board("sudoku1.txt")
-# print_grid(board)
-
-def solve_iteration(board):
-    dictionary = {}
-    for i in range(9):
-        for j in range(9):
-            if board[i][j] == 0:
-                dictionary[(i, j)] = possible_candidates(board, i, j)
+def solve_sudoku(board):
+    # Initialize possibilities for each empty cell
+    possibilities = {}
+    for r in range(9):
+        for c in range(9):
+            if board[r][c] == 0:
+                possible_nums = set(range(1, 10))
+                # Eliminate numbers already in row, column, and 3x3 block
+                for i in range(9):
+                    if board[r][i] != 0:
+                        possible_nums.discard(board[r][i])
+                    if board[i][c] != 0:
+                        possible_nums.discard(board[i][c])
                 
-        
-    # dictionary = sorted(dictionary.items(), key=lambda x: len(x[1]))
-    # first_entry = next(iter(dictionary))
-    # board[first_entry[0]][first_entry[1]] = dictionary[first_entry]
-    # dictionary = list(dictionary.items())
-    # del dictionary[0]
-    # dictionary = dict(dictionary)
+                start_row, start_col = 3 * (r // 3), 3 * (c // 3)
+                for i in range(start_row, start_row + 3):
+                    for j in range(start_col, start_col + 3):
+                        if board[i][j] != 0:
+                            possible_nums.discard(board[i][j])
+                
+                possibilities[(r, c)] = possible_nums
 
-    #return print_grid(board)
+    changed = True
+    while changed:
+        changed = False
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == 0:
+                    current_possibilities = possibilities[(r, c)]
+                    if len(current_possibilities) == 1:
+                        # Single Position found
+                        num_to_place = current_possibilities.pop()
+                        board[r][c] = num_to_place
+                        changed = True
+                        
+                        # Update possibilities of affected cells
+                        for i in range(9):
+                            if (r, i) in possibilities and board[r][i] == 0:
+                                possibilities[(r, i)].discard(num_to_place)
+                            if (i, c) in possibilities and board[i][c] == 0:
+                                possibilities[(i, c)].discard(num_to_place)
+                        
+                        start_row, start_col = 3 * (r // 3), 3 * (c // 3)
+                        for i in range(start_row, start_row + 3):
+                            for j in range(start_col, start_col + 3):
+                                if (i, j) in possibilities and board[i][j] == 0:
+                                    possibilities[(i, j)].discard(num_to_place)
+    
+    return board # Returns the solved or partially solved board
+
 board = sudoku_board("sudoku.txt")
-# print_grid(board)
-
-# print(solve_iteration(board))
-dictionary = {(0, 3): [3, 4], (0, 7): [1, 4, 9], (1, 2): [2,5,8,9]}
-dictionary = sorted(dictionary.items(), key=lambda x: len(x[1]))
-first_entry = next(iter(dictionary))[0]
-print(first_entry)
-print(dictionary[(0, 3)])
-#board[first_entry[0]][first_entry[1]] = dictionary[first_entry]
-# dictionary = list(dictionary.items())
-# del dictionary[0]
-# dictionary = dict(dictionary)
+print_grid(board)
+print("\n")
+print_grid(solve_sudoku(board))
 
 
 
