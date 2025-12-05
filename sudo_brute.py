@@ -1,6 +1,28 @@
 import random
 import sys
 
+def sudoku_board(textfile):
+    
+    lines = []
+    with open(textfile, "r") as file:
+        for line in file:
+            line = line.replace("\n", " ")
+            if line.strip():
+                lines.append(line)
+    board = []
+    for i, element in enumerate(lines):
+        line = [int(char) for char in element if char != " "]
+        #line = [char for char in line if char != 0 else char = " "]
+        board.append(line)
+    
+    return board
+
+def print_grid(arr):
+    for i in range(9):
+        for j in range(9):
+            print(arr[i][j], end=" "),
+        print()
+
 def solve_sudoku(board):
     # Initialize possibilities for each empty cell
     possibilities = {}
@@ -23,27 +45,7 @@ def solve_sudoku(board):
                 
                 possibilities[(r, c)] = possible_nums
 
-    def sudoku_board(textfile):
     
-    lines = []
-    with open(textfile, "r") as file:
-        for line in file:
-            line = line.replace("\n", " ")
-            if line.strip():
-                lines.append(line)
-    board = []
-    for i, element in enumerate(lines):
-        line = [int(char) for char in element if char != " "]
-        #line = [char for char in line if char != 0 else char = " "]
-        board.append(line)
-    
-    return board
-
-def print_grid(arr):
-    for i in range(9):
-        for j in range(9):
-            print(arr[i][j], end=" "),
-        print()
 
     changed = True
     while changed:
